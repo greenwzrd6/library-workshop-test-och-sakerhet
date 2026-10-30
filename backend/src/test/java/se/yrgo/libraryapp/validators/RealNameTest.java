@@ -20,13 +20,35 @@ public class RealNameTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "Jonas Rumpnisse",
+            "Rumpnisse Jonas",
             "Idiota Peerson",
-            "Snåljåp ßeln",
-            "Жhej Bombad",
-            "Bombad Man"
+            "dinmamma ßeln",
+            "Bombad Man",
+            "snåljåp Man",
+            "Dinpappa mamma",
+            "APNISSE snapnisse"
     })
-    void validateWhenInvalidNameReturnsFalse(String invalidName) {
+    void validateWhenInvalidFirstNameReturnsFalse(String invalidName) {
         assertThat(RealName.validate(invalidName)).isFalse();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "Jonas Rumpnisse",
+            "Peerson Idiota",
+            "ßeln dinmamma",
+            "Man Bombad",
+            "Man snÅljåp",
+            "mamma Dinpappa",
+            "snapnisse APNISS3"
+    })
+    void validateWhenInvalidLastNameReturnsFalse(String invalidName) {
+        assertThat(RealName.validate(invalidName)).isFalse();
+    }
+
+    @ParameterizedTest
+    @NullSource
+    void validateWhenNullNameReturnsFalse(String nullName) {
+        assertThat(RealName.validate(nullName)).isFalse();
     }
 }
