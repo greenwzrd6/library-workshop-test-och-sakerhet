@@ -12,7 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This validator checks that the real names match our high standard for proper names. I.e. no bad
+ * This validator checks that the real names match our high standard for proper
+ * names. I.e. no bad
  * words.
  */
 public final class RealName {
@@ -20,10 +21,11 @@ public final class RealName {
     private static final Set<String> invalidWords = new HashSet<>();
 
     static {
-        try (InputStream is = RealName.class.getClassLoader().getResourceAsStream("bad_words.txt");
-                BufferedReader reader =
-                        new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-            while (reader.readLine() != null) {
+        try (InputStream is = RealName.class.getClassLoader().getResourceAsStream("bad_words.txt")) {
+            if (is == null) {
+                logger.error("bad_words.txt not found");
+            } else {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 invalidWords.addAll(reader.lines().collect(Collectors.toSet()));
             }
         } catch (IOException ex) {
@@ -31,7 +33,8 @@ public final class RealName {
         }
     }
 
-    private RealName() {}
+    private RealName() {
+    }
 
     /**
      * Validates if the given name is a valid and proper name.
@@ -41,10 +44,13 @@ public final class RealName {
      * 
      */
     public static boolean validate(String name) {
+        if (name == null) {
+            return false;
+        }
         String cleanName = Utils.cleanAndUnLeet(name);
-        String[] words = cleanName.split("\\W+");
-        for (int i = 1; i < words.length; i++) {
-            if (invalidWords.contains(words[i])) {
+        String[] words = cleanName.split("(?U)\\W+");
+        for (String word : words) {
+            if (invalidWords.contains(word)) {
                 return false;
             }
         }

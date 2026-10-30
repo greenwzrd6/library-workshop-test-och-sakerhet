@@ -1,17 +1,59 @@
 package se.yrgo.libraryapp.validators;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.params.*;
+import org.junit.jupiter.params.provider.*;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class UsernameTest {
-    @Test
-    void correctUsername() {
-        assertTrue(Username.validate("bosse"));
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "boss",
+            "BOSS",
+            "____",
+            "----",
+            "@@@@",
+            "....",
+            "@-_.",
+            "Bayern-Mannen",
+            "123123123",
+            "BosseThaKillR1337",
+            "0000"
+    })
+    void validateWhenValidUsernameReturnsTrue(String validUsername) {
+        assertThat(Username.validate(validUsername)).isTrue();
     }
 
-    @Test
-    void incorrectUsername() {
-        assertFalse(Username.validate("name with space"));
+    @ParameterizedTest
+    @ValueSource(strings = {
+            " ",
+            "😍",
+            "😍😍😍😍😍😍😍😍",
+            ",,,,",
+            "Bayern-München",
+            "      ",
+            "tjenare mannen",
+            "                                                            Bosse",
+            "åäöåä",
+            "!!!!!!!!!!!!?????",
+            "123",
+            "жжллл"
+    })
+    void validateWhenInvalidUsernameReturnsFalse(String invalidUsername) {
+        assertThat(Username.validate(invalidUsername)).isFalse();
     }
+
+    @ParameterizedTest
+    @EmptySource
+    void validateWhenEmptyUsernamesReturnsFalse(String emptyUsernames) {
+        assertThat(Username.validate(emptyUsernames)).isFalse();
+    }
+
+    @ParameterizedTest
+    @NullSource
+    void validateWhenUsernameIsNullThrows(String nullUsername) {
+        assertThat(Username.validate(nullUsername)).isFalse();
+    }
+
 }
