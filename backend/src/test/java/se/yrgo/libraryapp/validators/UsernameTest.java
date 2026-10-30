@@ -29,6 +29,7 @@ public class UsernameTest {
     @ValueSource(strings = {
             " ",
             "😍",
+            "😍😍😍😍😍😍😍😍",
             ",,,,",
             "Bayern-München",
             "      ",
