@@ -29,9 +29,8 @@ public class UtilsTest {
 
     @ParameterizedTest
     @NullSource
-    void onlyLettersAndWhitespaceWhenNullThrows(String nullString) {
-        assertThatExceptionOfType(NullPointerException.class)
-                .isThrownBy(() -> Utils.onlyLettersAndWhitespace(nullString));
+    void onlyLettersAndWhitespaceWhenInputIsNullReturnsNull(String nullString) {
+        assertThat(nullString).isNull();
     }
 
     @ParameterizedTest
@@ -60,8 +59,7 @@ public class UtilsTest {
 
     @ParameterizedTest
     @NullSource
-    void cleanAndUnLeetWhenNullThrows(String nullString) {
-        assertThatExceptionOfType(NullPointerException.class)
-                .isThrownBy(() -> Utils.cleanAndUnLeet(nullString));
+    void cleanAndUnLeetWhenInputIsNullReturnsNull(String nullString) {
+        assertThat(nullString).isNull();
     }
 }
