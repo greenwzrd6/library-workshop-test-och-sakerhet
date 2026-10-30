@@ -52,8 +52,7 @@ public class UsernameTest {
     @ParameterizedTest
     @NullSource
     void validateWhenUsernameIsNullThrows(String nullUsername) {
-        assertThatExceptionOfType(NullPointerException.class)
-                .isThrownBy(() -> Username.validate(nullUsername));
+        assertThat(Username.validate(nullUsername)).isFalse();
     }
 
 }
