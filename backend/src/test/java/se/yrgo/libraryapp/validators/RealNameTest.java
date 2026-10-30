@@ -47,6 +47,20 @@ public class RealNameTest {
     }
 
     @ParameterizedTest
+    @ValueSource(strings = {
+            "Idiota Rumpnisse",
+            "Rumpnisse Idiota",
+            "snåljåp dinmamma",
+            "bombad Bombad",
+            "Dinmamma snÅljåp",
+            "mamma Dinpappa",
+            "snapnisse APNISS3"
+    })
+    void validateWhenInvalidFullNameReturnsFalse(String invalidName) {
+        assertThat(RealName.validate(invalidName)).isFalse();
+    }
+
+    @ParameterizedTest
     @NullSource
     void validateWhenNullNameReturnsFalse(String nullName) {
         assertThat(RealName.validate(nullName)).isFalse();
