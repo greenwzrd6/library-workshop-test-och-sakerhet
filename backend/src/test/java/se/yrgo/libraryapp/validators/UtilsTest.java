@@ -18,7 +18,8 @@ public class UtilsTest {
             "'🙈 hej, hihi',              ' hej hihi'",
             "!!!!!!!!,                    ''",
             "😎😎😎😎😎😎😎😎😎😎😎😎😎😎,     ''",
-            "'üüÄ¨¨¨¨ ',                  'üüä '"
+            "'üüÄ¨¨¨¨ ',                  'üüä '",
+            "жжллл,                       жжллл"
     })
     void onlyLettersAndWhitespaceWhenValidStringReturnsCorrectString(
             String input,
@@ -47,7 +48,8 @@ public class UtilsTest {
             "😎😎😎 😎😎😎😎,          ' '",
             "'Üüä¨¨¨¨ ',             'üüä '",
             "killzor,                killzor",
-            "DaveTheHunter,          davethehunter"
+            "DaveTheHunter,          davethehunter",
+            "ЖЖЛЛЛ,                  жжллл"
 
     })
     void cleanAndUnLeetWhenValidStringReturnsCorrectString(

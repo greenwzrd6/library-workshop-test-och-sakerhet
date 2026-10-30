@@ -37,7 +37,8 @@ public class UsernameTest {
             "                                                            Bosse",
             "åäöåä",
             "!!!!!!!!!!!!?????",
-            "123"
+            "123",
+            "жжллл"
     })
     void validateWhenInvalidUsernameReturnsFalse(String invalidUsername) {
         assertThat(Username.validate(invalidUsername)).isFalse();
