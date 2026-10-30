@@ -44,8 +44,11 @@ public class UtilsTest {
             "H3js4n j4g h373r D4VID, hejsan jag heter david",
             "29,                     ''",
             "6068y,                  bobby",
-            "😎😎😎 😎😎😎😎,           ' '",
-            "'Üüä¨¨¨¨ ',                  'üüä '"
+            "😎😎😎 😎😎😎😎,          ' '",
+            "'Üüä¨¨¨¨ ',             'üüä '",
+            "killzor,                killzor",
+            "DaveTheHunter,          davethehunter"
+
     })
     void cleanAndUnLeetWhenValidStringReturnsCorrectString(
             String input,
