@@ -44,10 +44,13 @@ public final class RealName {
      * 
      */
     public static boolean validate(String name) {
+        if (name == null) {
+            return false;
+        }
         String cleanName = Utils.cleanAndUnLeet(name);
-        String[] words = cleanName.split("\\W+");
-        for (int i = 1; i < words.length; i++) {
-            if (invalidWords.contains(words[i])) {
+        String[] words = cleanName.split("(?U)\\W+");
+        for (String word : words) {
+            if (invalidWords.contains(word)) {
                 return false;
             }
         }
