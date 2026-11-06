@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.*;
 
-import javax.sql.*;
 import javax.sql.DataSource;
 
-import org.bouncycastle.crypto.encodings.*;
 import org.h2.jdbcx.*;
 import org.junit.jupiter.api.*;
 
