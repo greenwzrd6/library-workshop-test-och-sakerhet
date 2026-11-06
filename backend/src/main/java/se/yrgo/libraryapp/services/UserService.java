@@ -2,6 +2,8 @@ package se.yrgo.libraryapp.services;
 
 import java.util.Optional;
 import javax.inject.Inject;
+
+import org.slf4j.*;
 import org.springframework.security.crypto.password.*;
 
 import se.yrgo.libraryapp.dao.UserDao;
@@ -10,6 +12,7 @@ import se.yrgo.libraryapp.entities.*;
 public class UserService {
     private UserDao userDao;
     private PasswordEncoder encoder;
+    private static Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Inject
     UserService(UserDao userDao, PasswordEncoder encoder) {
@@ -30,5 +33,23 @@ public class UserService {
         }
 
         return Optional.of(loginInfo.getUserId());
+    }
+
+    public boolean isNameAvailable(String name) {
+        if (name == null || name.trim().length() < 3) {
+            return false;
+        }
+        return userDao.isNameAvailable(name);
+    }
+
+    public boolean register(String name, String realname, String password) {
+        String passwordHash = encoder.encode(password);
+
+        if (isNameAvailable(name)) {
+            logger.error("\"{}\" is not an available name", name);
+            return false;
+        }
+
+        return userDao.register(name, realname, passwordHash);
     }
 }

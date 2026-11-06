@@ -87,4 +87,8 @@ public class UserDaoTest {
         UserDao userDao = new UserDao(ds);
         assertThat(userDao.get(username)).isEmpty();
     }
+
+    // potentiellt att man skriver tester för om nån petar in null
+    // eller något annat värde än ett String id
+
 }
