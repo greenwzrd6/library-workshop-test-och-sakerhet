@@ -45,7 +45,7 @@ public class UserService {
     public boolean register(String name, String realname, String password) {
         String passwordHash = encoder.encode(password);
 
-        if (isNameAvailable(name)) {
+        if (!isNameAvailable(name)) {
             logger.error("\"{}\" is not an available name", name);
             return false;
         }
