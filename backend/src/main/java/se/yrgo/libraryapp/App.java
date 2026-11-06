@@ -27,7 +27,7 @@ import se.yrgo.libraryapp.entities.Role;
 public class App extends Jooby {
   public App() {
     install(new GracefulShutdown());
-    install(new GuiceModule()); // dependency injection
+    install(new GuiceModule(new AppModule())); // dependency injection
     install(new HikariModule()); // database connections
     install(new FlywayModule()); // schema migration
     install(new JacksonModule()); // json (de)serialization
@@ -51,7 +51,8 @@ public class App extends Jooby {
     pac4jOptions.setCookieSameSite(SameSite.LAX);
     pac4jOptions.setLogoutPath("/p4jlogout"); // can't get rid of it
 
-    // Having three modules seems less than ideal, but I can't find another way with jooby
+    // Having three modules seems less than ideal, but I can't find another way with
+    // jooby
 
     Pac4jModule module1 = new Pac4jModule(pac4jOptions);
     module1.client("/*", DbCookieClient.class);
