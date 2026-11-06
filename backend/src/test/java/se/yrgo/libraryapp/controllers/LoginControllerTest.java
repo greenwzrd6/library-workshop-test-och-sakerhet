@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
 import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 import org.mockito.quality.Strictness;
+import org.pac4j.core.exception.*;
 
 import io.jooby.*;
 import se.yrgo.libraryapp.dao.*;
@@ -48,5 +49,36 @@ public class LoginControllerTest {
         List<Role> roles = controller.login(context, null, login);
 
         assertThat(roles).containsExactly(Role.USER);
+    }
+
+    @Test
+    void loginWithIncorrectDataReturnsEmptyList() {
+        LoginData login = new LoginData("asdasd", "asdasdasdadasd");
+        List<Role> roles = controller.login(context, null, login);
+
+        assertThat(roles).isEmpty();
+        verify(context).setResponseCode(StatusCode.UNAUTHORIZED);
+    }
+
+    @Test
+    void isLoggedInWithValidSessionIdReturnsCorrectRole() {
+        UserId userId = UserId.of(6);
+        UUID sessionId = UUID.randomUUID();
+        when(sessionDao.validate(sessionId)).thenReturn(userId);
+        when(roleDao.get(userId)).thenReturn(List.of(Role.USER));
+
+        List<Role> roles = controller.isLoggedIn(sessionId.toString());
+
+        assertThat(roles).containsExactly(Role.USER);
+    }
+
+    @Test
+    void isLoggedInWithExpiredSessionIdReturnsCorrectRole() {
+        UUID sessionId = UUID.randomUUID();
+        when(sessionDao.validate(sessionId)).thenThrow(new CredentialsException("expired"));
+
+        List<Role> roles = controller.isLoggedIn(sessionId.toString());
+
+        assertThat(roles).isEmpty();
     }
 }
