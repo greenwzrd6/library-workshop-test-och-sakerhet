@@ -18,7 +18,7 @@ import se.yrgo.libraryapp.dao.*;
 import se.yrgo.libraryapp.entities.*;
 
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
-public class BookControllerAdminTest {
+public class BookControllerTest {
     @Mock
     private BookDao bookDao;
 
