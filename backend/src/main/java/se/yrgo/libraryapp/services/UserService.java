@@ -43,6 +43,11 @@ public class UserService {
     }
 
     public boolean register(String name, String realname, String password) {
+        if (password == null) {
+            logger.error("Password can not be null");
+            return false;
+        }
+
         String passwordHash = encoder.encode(password);
 
         if (!isNameAvailable(name)) {
