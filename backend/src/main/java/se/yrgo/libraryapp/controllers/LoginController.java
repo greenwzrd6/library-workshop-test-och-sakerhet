@@ -29,7 +29,7 @@ public class LoginController {
 
     @POST
     public List<Role> login(Context context, @CookieParam("session") String sessionCookie, LoginData login) {
-        
+
         if (isInvalidSession(sessionCookie)) {
             Optional<UserId> maybeUserId = userService.validate(login.getUsername(), login.getPassword());
 
@@ -45,7 +45,7 @@ public class LoginController {
 
             return roleDao.get(userId);
         }
-        
+
         return List.of();
     }
 
@@ -55,8 +55,7 @@ public class LoginController {
         try {
             UserId userId = getUserForSession(sessionCookie);
             return roleDao.get(userId);
-        }
-        catch (IllegalArgumentException | CredentialsException ex) {
+        } catch (IllegalArgumentException | CredentialsException ex) {
             return List.of();
         }
     }
@@ -67,8 +66,7 @@ public class LoginController {
         try {
             getUserForSession(sessionCookie);
             return false;
-        }
-        catch (IllegalArgumentException | CredentialsException ex) {
+        } catch (IllegalArgumentException | CredentialsException ex) {
             return true;
         }
     }
